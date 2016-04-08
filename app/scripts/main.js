@@ -32,6 +32,47 @@ function APIGetCall(url){
 	return jqXhr.responseJSON;
 }
 
+
+/*
+
+*/
+function imageOps(imgSrc)
+{
+var canvas = document.getElementById("leCanvas");
+var context = canvas.getContext("2d");
+context.globalCompositeOperation = "source-over";
+
+var image = new Image();
+image.src = imgSrc;
+image.onload = function() {
+  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+  // if (level < 2)
+  //   return;
+
+  var together = new Image();
+  together.src = "images/together.jpg";
+  together.onload = function() {
+    context.globalCompositeOperation = "soft-light";
+    context.drawImage(together, 1, 1, canvas.width, canvas.height);
+  //
+  //   if (level < 3)
+  //     return;
+  //
+  //   gradient = context.createLinearGradient(0, canvas.height, canvas.width, canvas.height);
+  //
+  //   gradient.addColorStop(0.000, 'rgba(255, 0, 0, 1.000)');
+  //   gradient.addColorStop(0.333, 'rgba(225, 255, 0, 1.000)');
+  //   gradient.addColorStop(0.666, 'rgba(0, 255, 17, 1.000)');
+  //   gradient.addColorStop(1.000, 'rgba(0, 55, 255, 1.000)');
+  //
+  //   context.fillStyle = gradient;
+  //   context.fillRect(0, 0, canvas.width, canvas.height);
+  };
+};
+}
+
+
 // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
     // The response object is returned with a status field that lets the
@@ -105,12 +146,14 @@ function APIGetCall(url){
     var access_token = access_token;
 
     //getting facebook profile picture
-    FB.api('me/picture?width=200', function(response) {
+    FB.api('me/picture?width=300', function(response) {
 
+      $("#profile_picture").attr("src",response.data.url);
       console.log(response);
+      imageOps(response.data.url);
 
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response + '!';
+      // document.getElementById('status').innerHTML =
+      //   'Thanks for logging in, ' + response + '!';
     });
 
 
