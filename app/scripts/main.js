@@ -1,16 +1,46 @@
 
+/*
+Function to make APIPostCall
+*/
+
+function APIPostCall(url,data){
+	var jqXhr = $.ajax({
+		url:url,
+		method:"POST",
+		contentType:"application/json; charset=utf-8",
+		dataType:"json",
+		async:false,
+		data:JSON.stringify(data)
+	});
+
+	return jqXhr.responseJSON;
+}
+
+/*
+Function to make APIGetCall
+*/
+
+function APIGetCall(url){
+	var jqXhr = $.ajax({
+		url:url,
+		method:"GET",
+		contentType:"application/json; charset=utf-8",
+		dataType:"json",
+		async:false,
+	});
+
+	return jqXhr.responseJSON;
+}
 
 // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
     // Full docs on the response object can be found in the documentation
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-      testAPI();
+      testAPI(response);
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
       document.getElementById('status').innerHTML = 'Please log ' +
@@ -70,13 +100,17 @@
 
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
-  function testAPI() {
+  function testAPI(access_token) {
     console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
+    var access_token = access_token;
 
-      console.log('Successful login for: ' + response);
+    //getting facebook profile picture
+    FB.api('me/picture?width=200', function(response) {
+
+      console.log(response);
+
       document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
+        'Thanks for logging in, ' + response + '!';
     });
 
 
