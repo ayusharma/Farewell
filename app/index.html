@@ -7,6 +7,7 @@
     <title>farewell</title>
 
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css" >
     <link href='https://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css'>
     <!-- Place favicon.ico in the root directory -->
 
@@ -31,7 +32,7 @@
     <div class="container">
       <!-- <div class="header">
         <ul class="nav nav-pills pull-right">
-          <li><a><fb:login-button scope="public_profile,email" onlogin="checkLoginState();">  </fb:login-button></a></li>
+          <li><a id="loginbutton"><fb:login-button scope="public_profile,email" onlogin="checkLoginState();">  </fb:login-button></a></li>
         </ul>
         <h3 class="text-muted">farewell</h3>
       </div> -->
@@ -50,17 +51,28 @@
             </div>
           </div>
           <div class="row">
-            <!-- <div class="col-xs-6 col-md-3">
-              <a href="#" class="thumbnail">
-                <img id="profile_picture" src="ayush" alt="Facebook profile picture">
-              </a>
-            </div> -->
-            <div class="col-md-12">
-              <canvas  class="thumbnail" id="leCanvas" width="200" height="252" style="width:200; margin:auto;"></canvas>
+            <div class="col-md-12 text-center" id="loginbutton">
+              <br/>
+              <button type="button" onclick="fblogin();" class="btn btn-danger btn-lg">
+               <span>Connet using</span>
+               <i class="fa fa-facebook-official" aria-hidden="true"></i>
+             </button>
+             <!-- <a id="loginbutton"><fb:login-button scope="public_profile,email,user_photos,publish_actions" onlogin="checkLoginState();"></fb:login-button></a> -->
             </div>
-            <div class="col-md-12 text-center">
+            <br/>
+            <div class="col-md-12" id="profilepic" style="display:none;">
+              <canvas  class="thumbnail" id="leCanvas" width="253" height="320" style="width:253; margin:auto;"></canvas>
+            </div>
+            <div class="col-md-12 text-center" id="downloadbutton" style="display:none;">
               <br>
-              <button class="btn btn-danger">Get your profile picture</button>
+              <a class="btn btn-danger" onclick="downloadCanvas(this,'leCanvas','farewell.png')">Get your profile picture</a>
+            </div>
+
+            <div class="col-md-12">
+              <br/>
+              <p style="font-size:20px; text-align:center; color:#FFF; font-family: 'Dancing Script', cursive;">
+                “For me, the times I always regret are missed opportunities to say farewell to good people, to wish them long life and say to them in all sincerity, "You build and do not destroy; you sow goodwill and reap it; smiles bloom in the wake of your passing, and I will keep your kindness in trust and share it as occasion arises, so that your life will be a quenching draught of calm in a land of drought and stress." Too often I never get to say that when it should be said. Instead, I leave them with the equivalent of a "Later, dude!" only to discover there would be no later for us.”
+              </p>
             </div>
         </div>
 
@@ -72,7 +84,7 @@
 
 
       <div class="footer">
-        <p>Made with <span style="color:red;">♥</span> by Ayush </p>
+        <p style="color:#fff;" class="text-center">Made with <span style="color:red;">♥</span> by Ayush </p>
       </div>
     </div>
 

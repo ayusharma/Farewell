@@ -1,18 +1,10 @@
 
-
-/*
-
-*/
-
-var imgData;
-//
-// function updateProfilePicture(){
-//   console.log("asdfs")
-//
-// }
+function downloadCanvas(link, canvasId, filename) {
+    link.href = document.getElementById(canvasId).toDataURL();
+    link.download = filename;
+}
 
 function imageOps(imgSrc) {
-  // var dfd = $.Deferred();
 
   var canvas = document.getElementById("leCanvas");
   var context = canvas.getContext("2d");
@@ -32,13 +24,9 @@ function imageOps(imgSrc) {
     together.onload = function() {
       // context.globalCompositeOperation = "soft-light";
       context.drawImage(together, 0, 0, canvas.width, canvas.height);
-      imgData = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream")
 
     };
   };
-  // if(imgData){
-  //   dfd.resolve( return imgData )
-  // }
 }
 
 
@@ -55,13 +43,13 @@ function imageOps(imgSrc) {
       testAPI(response);
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
+      // document.getElementById('status').innerHTML = 'Please log ' +
+      //   'into this app.';
     } else {
       // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
+      // document.getElementById('status').innerHTML = 'Please log ' +
+      //   'into Facebook.';
     }
   }
 
@@ -74,12 +62,21 @@ function imageOps(imgSrc) {
     });
   }
 
+  function fblogin(){
+    FB.login(function(response){
+      if (response.status === 'connected') {
+        $('#loginbutton').css('display','none');
+        testAPI(response);
+      }
+    });
+  }
+
   window.fbAsyncInit = function() {
   FB.init({
     appId      : '807805989353037',
     cookie     : true,  // enable cookies to allow the server to access
                         // the session
-    xfbml      : true,  // parse social plugins on this page
+    xfbml      : false,  // parse social plugins on this page
     version    : 'v2.5' // use graph api version 2.5
   });
 
@@ -125,26 +122,10 @@ function imageOps(imgSrc) {
     });
 
     //getting facebook profile picture
-    FB.api('me/picture?width=200', function(response) {
+    FB.api('me/picture?width=250', function(response) {
       console.log(response)
-
+      $('#downloadbutton,#profilepic').css('display','block');
       imageOps(response.data.url);
 
     });
-
-    FB.api(
-        "me/1017716554960200/photos",
-        "POST",
-        {
-            "source": imgData;
-        },
-        function (response) {
-          if (response && !response.error) {
-            console.log(response);
-          }
-          console.log(response);
-        }
-    );
-
-
   }
