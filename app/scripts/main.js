@@ -1,75 +1,44 @@
 
-/*
-Function to make APIPostCall
-*/
-
-function APIPostCall(url,data){
-	var jqXhr = $.ajax({
-		url:url,
-		method:"POST",
-		contentType:"application/json; charset=utf-8",
-		dataType:"json",
-		async:false,
-		data:JSON.stringify(data)
-	});
-
-	return jqXhr.responseJSON;
-}
-
-/*
-Function to make APIGetCall
-*/
-
-function APIGetCall(url){
-	var jqXhr = $.ajax({
-		url:url,
-		method:"GET",
-		contentType:"application/json; charset=utf-8",
-		dataType:"json",
-		async:false,
-	});
-
-	return jqXhr.responseJSON;
-}
-
 
 /*
 
 */
-function imageOps(imgSrc)
-{
-var canvas = document.getElementById("leCanvas");
-var context = canvas.getContext("2d");
-context.globalCompositeOperation = "source-over";
 
-var image = new Image();
-image.src = imgSrc;
-image.onload = function() {
-  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+var imgData;
+//
+// function updateProfilePicture(){
+//   console.log("asdfs")
+//
+// }
 
-  // if (level < 2)
-  //   return;
+function imageOps(imgSrc) {
+  // var dfd = $.Deferred();
 
-  var together = new Image();
-  together.src = "images/together.jpg";
-  together.onload = function() {
-    context.globalCompositeOperation = "soft-light";
-    context.drawImage(together, 1, 1, canvas.width, canvas.height);
-  //
-  //   if (level < 3)
-  //     return;
-  //
-  //   gradient = context.createLinearGradient(0, canvas.height, canvas.width, canvas.height);
-  //
-  //   gradient.addColorStop(0.000, 'rgba(255, 0, 0, 1.000)');
-  //   gradient.addColorStop(0.333, 'rgba(225, 255, 0, 1.000)');
-  //   gradient.addColorStop(0.666, 'rgba(0, 255, 17, 1.000)');
-  //   gradient.addColorStop(1.000, 'rgba(0, 55, 255, 1.000)');
-  //
-  //   context.fillStyle = gradient;
-  //   context.fillRect(0, 0, canvas.width, canvas.height);
+  var canvas = document.getElementById("leCanvas");
+  var context = canvas.getContext("2d");
+  context.globalCompositeOperation = "source-over";
+
+  var image = new Image();
+  image.setAttribute('crossOrigin', 'anonymous');
+  image.src = imgSrc;
+
+  image.onload = function() {
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+
+    var together = new Image();
+    together.setAttribute('crossOrigin', 'anonymous');
+    together.src = "images/together.png";
+    together.onload = function() {
+      // context.globalCompositeOperation = "soft-light";
+      context.drawImage(together, 0, 0, canvas.width, canvas.height);
+      imgData = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream")
+
+    };
   };
-};
+  // if(imgData){
+  //   dfd.resolve( return imgData )
+  // }
 }
 
 
@@ -81,6 +50,8 @@ image.onload = function() {
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
+
+      $('#loginbutton').css('display','none');
       testAPI(response);
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
@@ -142,20 +113,38 @@ image.onload = function() {
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
   function testAPI(access_token) {
+
     console.log('Welcome!  Fetching your information.... ');
+
     var access_token = access_token;
 
-    //getting facebook profile picture
-    FB.api('me/picture?width=300', function(response) {
+    console.log(access_token)
 
-      $("#profile_picture").attr("src",response.data.url);
+    FB.api('me/albums',function(response) {
       console.log(response);
-      imageOps(response.data.url);
-
-      // document.getElementById('status').innerHTML =
-      //   'Thanks for logging in, ' + response + '!';
     });
 
+    //getting facebook profile picture
+    FB.api('me/picture?width=200', function(response) {
+      console.log(response)
+
+      imageOps(response.data.url);
+
+    });
+
+    FB.api(
+        "me/1017716554960200/photos",
+        "POST",
+        {
+            "source": imgData;
+        },
+        function (response) {
+          if (response && !response.error) {
+            console.log(response);
+          }
+          console.log(response);
+        }
+    );
 
 
   }
