@@ -20,7 +20,7 @@ All contributions are welcome.
 
 ## Support
 
-If you have any problem or suggestion please open an issue [here](https://github.com/ayushsharma/Farewell/issues).
+If you have any problem or suggestion please open an issue [here](https://github.com/ayusharma/Farewell/issues).
 
 ## License
 
