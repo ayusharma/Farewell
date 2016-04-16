@@ -1,4 +1,5 @@
 
+
 function downloadCanvas(link, canvasId, filename) {
     link.href = document.getElementById(canvasId).toDataURL();
     link.download = filename;
@@ -6,9 +7,9 @@ function downloadCanvas(link, canvasId, filename) {
 
 function imageOps(imgSrc) {
 
-  var canvas = document.getElementById("leCanvas");
-  var context = canvas.getContext("2d");
-  context.globalCompositeOperation = "source-over";
+  var canvas = document.getElementById('leCanvas');
+  var context = canvas.getContext('2d');
+  context.globalCompositeOperation = 'source-over';
 
   var image = new Image();
   image.setAttribute('crossOrigin', 'anonymous');
@@ -20,7 +21,7 @@ function imageOps(imgSrc) {
 
     var together = new Image();
     together.setAttribute('crossOrigin', 'anonymous');
-    together.src = "images/together.png";
+    together.src = 'images/together.png';
     together.onload = function() {
       // context.globalCompositeOperation = "soft-light";
       context.drawImage(together, 0, 0, canvas.width, canvas.height);
@@ -39,7 +40,7 @@ function imageOps(imgSrc) {
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
 
-      $('#loginbutton').css('display','none');
+      $('#loginbutton').css('display', 'none');
       testAPI(response);
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
@@ -65,7 +66,7 @@ function imageOps(imgSrc) {
   function fblogin(){
     FB.login(function(response){
       if (response.status === 'connected') {
-        $('#loginbutton').css('display','none');
+        $('#loginbutton').css('display', 'none');
         testAPI(response);
       }
     });
@@ -122,9 +123,9 @@ function imageOps(imgSrc) {
     });
 
     //getting facebook profile picture
-    FB.api('me/picture?width=250', function(response) {
+    FB.api('me/picture?width=400', function(response) {
       console.log(response)
-      $('#downloadbutton,#profilepic').css('display','block');
+      $('#downloadbutton,#profilepic').css('display', 'block');
       imageOps(response.data.url);
 
     });
