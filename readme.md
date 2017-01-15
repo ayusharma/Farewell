@@ -2,7 +2,7 @@
 ## Farewell
 
 ### Demo
-http://ayushrama.in/farewell
+https://enigmatic-thicket-88791.herokuapp.com/
 
 ### Installation
 

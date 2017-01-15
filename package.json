@@ -1,7 +1,7 @@
 {
   "name": "Farewell",
   "version": "0.1.1",
-  "description": "A simple Facebook extension",
+  "description": "A simple Facebook extension.",
   "engines": {
     "node": "4.4.3"
   },
