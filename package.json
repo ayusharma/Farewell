@@ -1,8 +1,11 @@
 {
-  "private": true,
+  "name": "Farewell",
+  "version": "0.1.1",
+  "description": "A simple Facebook extension",
   "engines": {
     "node": "4.4.3"
   },
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "build": "gulp build",
